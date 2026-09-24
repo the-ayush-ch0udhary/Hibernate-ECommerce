@@ -1,19 +1,12 @@
--- =====================================================================
--- E-Commerce System Database Schema
--- Compatible with MySQL 8.x / MariaDB / ANSI SQL
--- =====================================================================
-
 CREATE DATABASE IF NOT EXISTS ecommerce_db;
 USE ecommerce_db;
 
--- 1. Drop existing tables if re-initializing (in reverse dependency order)
 DROP TABLE IF EXISTS order_details;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
 
--- 2. Category Table
 CREATE TABLE categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -22,7 +15,6 @@ CREATE TABLE categories (
     CONSTRAINT uk_category_name UNIQUE (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 3. Product Table
 CREATE TABLE products (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -35,7 +27,6 @@ CREATE TABLE products (
     INDEX idx_product_price (price)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 4. Users Table
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -48,7 +39,6 @@ CREATE TABLE users (
     INDEX idx_user_role (role)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 5. Orders Table
 CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_date DATETIME NOT NULL,
@@ -60,7 +50,6 @@ CREATE TABLE orders (
     INDEX idx_orders_date (order_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 6. OrderDetails Table
 CREATE TABLE order_details (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     quantity INT NOT NULL,
@@ -73,11 +62,6 @@ CREATE TABLE order_details (
     INDEX idx_orderdetails_order (order_id),
     INDEX idx_orderdetails_product (product_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- =====================================================================
--- Sample Seed Data
--- Passwords are hashed with BCrypt for "Admin@123" and "Customer@123"
--- =====================================================================
 
 INSERT INTO categories (name, description, deleted) VALUES
 ('Electronics', 'Smartphones, laptops, tablets, and tech accessories', FALSE),
@@ -94,8 +78,6 @@ INSERT INTO products (name, price, stock_quantity, category_id, deleted) VALUES
 ('Men Cotton Casual Shirt', 34.99, 80, 3, FALSE),
 ('Instant Pot Duo 7-in-1', 99.95, 20, 4, FALSE);
 
--- Password for admin: Admin@123 -> $2a$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
--- Password for customer: Customer@123 -> $2a$12$e8Yy8f6eOcvzG/m5gWb64.n2gD2GzXfGjM4hE8t7r4xS3H6aY3Ryy
 INSERT INTO users (username, password, email, role, deleted) VALUES
 ('admin_user', '$2a$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin@ecommerce.com', 'ADMIN', FALSE),
 ('alice_smith', '$2a$12$e8Yy8f6eOcvzG/m5gWb64.n2gD2GzXfGjM4hE8t7r4xS3H6aY3Ryy', 'alice@example.com', 'CUSTOMER', FALSE),
