@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- MySQL Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ecommerce_db?createDatabaseIfNotExist=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">YOUR_DB_PASSWORD</property>
+
+        <!-- JDBC connection pool settings -->
+        <property name="hibernate.connection.pool_size">10</property>
+
+        <!-- SQL dialect for MySQL 8+ -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.highlight_sql">true</property>
+
+        <!-- Auto update tables -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Enable current session context -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Annotated Entity Classes -->
+        <mapping class="com.ecommerce.entity.Category"/>
+        <mapping class="com.ecommerce.entity.Product"/>
+        <mapping class="com.ecommerce.entity.Users"/>
+        <mapping class="com.ecommerce.entity.Orders"/>
+        <mapping class="com.ecommerce.entity.OrderDetails"/>
+    </session-factory>
+</hibernate-configuration>
